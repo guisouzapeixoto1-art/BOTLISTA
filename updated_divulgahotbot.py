@@ -31,8 +31,8 @@ nest_asyncio.apply()
 # === CONFIG ===
 load_dotenv()
 
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-ADMIN_ID = int(os.getenv("ADMIN_ID"))
+BOT_TOKEN = os.getenv("8208812220:AAF_G-ACZLMRQRue4xnl3bo33Kjn2c25_nk")
+ADMIN_ID = int(os.getenv("7696278519"))
 
 if not BOT_TOKEN or not ADMIN_ID:
     logger.error("BOT_TOKEN e/ou ADMIN_ID não definidos nas variáveis de ambiente!")
