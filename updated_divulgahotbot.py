@@ -31,8 +31,8 @@ nest_asyncio.apply()
 # === CONFIG ===
 load_dotenv()
 
-BOT_TOKEN = os.getenv("8208812220:AAF_G-ACZLMRQRue4xnl3bo33Kjn2c25_nk")
-ADMIN_ID = int(os.getenv("7696278519"))
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+ADMIN_ID = int(os.getenv("ADMIN_ID"))
 
 if not BOT_TOKEN or not ADMIN_ID:
     logger.error("BOT_TOKEN e/ou ADMIN_ID não definidos nas variáveis de ambiente!")
@@ -109,13 +109,11 @@ async def on_chat_member_update(update: Update, context: ContextTypes.DEFAULT_TY
 async def send_welcome_message(update: Update, context: ContextTypes.DEFAULT_TYPE, chat_id: int):
     # Mensagem de boas-vindas
     welcome_text = (
-        "🎉 Olá! Eu sou o bot responsável por ajudar a gerenciar e promover seu canal!
-
-"
-        "Agora que você me adicionou como administrador, eu posso enviar mensagens programadas para o seu canal.
-"
-        "Fique atento às instruções e aproveite todos os benefícios!"
-    )
+        welcome_text = (
+     "🎉 Olá! Eu sou o bot responsável por ajudar a gerenciar e promover seu canal!\n\n"
+     "Agora que você me adicionou como administrador, eu posso enviar mensagens programadas para o seu canal.\n"
+     "Fique atento às instruções e aproveite todos os benefícios!"
+ )
     try:
         # Enviar a mensagem de boas-vindas para o canal
         await context.bot.send_message(chat_id, welcome_text)
