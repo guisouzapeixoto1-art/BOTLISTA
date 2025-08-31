@@ -1,4 +1,3 @@
-
 import asyncio
 import logging
 import sqlite3
@@ -109,11 +108,10 @@ async def on_chat_member_update(update: Update, context: ContextTypes.DEFAULT_TY
 async def send_welcome_message(update: Update, context: ContextTypes.DEFAULT_TYPE, chat_id: int):
     # Mensagem de boas-vindas
     welcome_text = (
-        welcome_text = (
-     "🎉 Olá! Eu sou o bot responsável por ajudar a gerenciar e promover seu canal!\n\n"
-     "Agora que você me adicionou como administrador, eu posso enviar mensagens programadas para o seu canal.\n"
-     "Fique atento às instruções e aproveite todos os benefícios!"
- )
+        "🎉 Olá! Eu sou o bot responsável por ajudar a gerenciar e promover seu canal!\n\n"
+        "Agora que você me adicionou como administrador, eu posso enviar mensagens programadas para o seu canal.\n"
+        "Fique atento às instruções e aproveite todos os benefícios!"
+    )
     try:
         # Enviar a mensagem de boas-vindas para o canal
         await context.bot.send_message(chat_id, welcome_text)
@@ -137,7 +135,7 @@ async def enviar_mensagem_programada(bot):
             continue  # Se já foi interagido hoje, pula para o próximo canal
 
         # Pausar entre os envios para evitar múltiplos pedidos em sequência
-        await asyncio.sleep(5)  # Adiciona uma pausa de 5 segundos entre os envios
+        await asyncio.sleep(random.randint(5, 10))  # Pausa aleatória entre 5 e 10 segundos
 
         # Enviar a mensagem com a lista de canais
         try:
@@ -176,40 +174,4 @@ scheduler = AsyncIOScheduler()  # Agora o scheduler é inicializado corretamente
 
 # Main
 async def main():
-    logger.info("Iniciando o bot...")  # Log para verificar o início da execução
-
-    # Configuração do bot com pool e timeout ajustados
-    app = ApplicationBuilder().token(BOT_TOKEN).build()
-
-    # Chama a função para criar a tabela 'canais' se não existir
-    create_tables()
-
-    # Ajustando o pool de conexões e o timeout com a API pública
-    app.bot._request_kwargs = {
-        'timeout': 30,  # Timeout de 30 segundos
-        'pool_size': 20  # Pool de conexões de 20
-    }
-
-    # Adicionando os handlers
-    app.add_handler(ChatMemberHandler(on_chat_member_update))  # Verificar quando o bot é adicionado como administrador
-    app.add_handler(CommandHandler("start", start))  # Comando start agora registrado
-    app.add_handler(CallbackQueryHandler(button))  # Handler de botões
-
-    # Agendando as mensagens para horários específicos em horário de Brasília
-    try:
-        scheduler.add_job(enviar_mensagem_programada, "cron", hour=21, minute=30, args=[app.bot], timezone=brasilia_tz)  # 21:10
-        scheduler.add_job(enviar_mensagem_programada, "cron", hour=4, minute=0, args=[app.bot], timezone=brasilia_tz)   # 4h
-        scheduler.add_job(enviar_mensagem_programada, "cron", hour=11, minute=0, args=[app.bot], timezone=brasilia_tz)  # 11h
-        scheduler.add_job(enviar_mensagem_programada, "cron", hour=18, minute=20, args=[app.bot], timezone=brasilia_tz)  # 17h
-        scheduler.start()  # Iniciando o scheduler
-    except Exception as e:
-        logger.error(f"Erro ao agendar tarefa: {e}")
-
-    logger.info("✅ Bot rodando com polling e agendamento diário!")
-    await app.run_polling(drop_pending_updates=True, timeout=30)  # Polling com timeout configurado
-
-if __name__ == "__main__":
-    try:
-        asyncio.run(main())  # Usando asyncio.run diretamente
-    except Exception as e:
-        logger.error(f"Erro ao iniciar o bot: {e}")
+    logger.info("Iniciando o bot
